@@ -1,0 +1,61 @@
+default_environment: dev
+project_id: 019b0b1d-037c-7fe2-af6c-2c82a1db7197
+environments:
+- name: dev
+- name: staging
+- name: prod
+plugins:
+  extractors:
+  - name: tap-csv
+    variant: meltanolabs
+    pip_url: git+https://github.com/MeltanoLabs/tap-csv.git
+    config:
+      files:
+      - entity: DimGeolocation
+        path: data/olist_geolocation_dataset.csv
+        keys: [geolocation_zip_code_prefix]
+      - entity: olist_order_items_dataset
+        path: data/olist_order_items_dataset.csv
+        keys: [order_id]
+      - entity: olist_order_payments_dataset
+        path: data/olist_order_payments_dataset.csv
+        keys: [order_id]
+      - entity: olist_order_reviews_dataset
+        path: data/olist_order_reviews_dataset.csv
+        keys: [review_id]
+      - entity: olist_orders_dataset
+        path: data/olist_orders_dataset.csv
+        keys: [order_id]
+      - entity: olist_products_dataset
+        path: data/olist_products_dataset.csv
+        keys: [product_id]
+      - entity: olist_sellers_dataset
+        path: data/olist_sellers_dataset.csv
+        keys: [seller_id]
+      - entity: product_category_name_translation
+        path: data/product_category_name_translation.csv
+        keys: [product_category_name]
+      add_metadata_columns: false
+  loaders:
+  - name: target-postgres
+    variant: meltanolabs
+    pip_url: meltanolabs-target-postgres
+    config:
+      sqlalchemy_url: postgresql://pgadm2:Santa666@localhost:5432/bbb
+      default_target_schema: raw
+  utilities:
+  - name: dbt-postgres
+    variant: dbt-labs
+    pip_url: dbt-core dbt-postgres meltano-dbt-ext~=0.3.0
+    config:
+      profiles_dir: /home/divya/Group2_Project/meltano-projects/.meltano/utilities/dbt-postgres/profiles
+      project_dir: /home/divya/Group2_Project/meltano-projects/.meltano/utilities/dbt-postgres/project
+      target: dev
+      target_schema: analytics
+      host: localhost
+      port: 5432
+      user: pgadm2
+      password: Santa666
+      database: bbb
+      schema: analytics
+      threads: '4'

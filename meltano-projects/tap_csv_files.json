@@ -1,0 +1,9 @@
+{
+  "files": [
+    {
+      "entity": "olist_customers_dataset",
+      "path": "data/olist_customers_dataset.csv",
+      "keys": ["customer_id"]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+default_environment: dev
+project_id: 019b0b1d-037c-7fe2-af6c-2c82a1db7197
+environments:
+- name: dev
+- name: staging
+- name: prod
+plugins:
+  extractors:
+  - name: tap-csv
+    variant: meltanolabs
+    pip_url: git+https://github.com/MeltanoLabs/tap-csv.git
+    config:
+      add_metadata_columns: false
+      csv_files_definition: e
+  loaders:
+  - name: target-postgres
+    variant: meltanolabs
+    pip_url: meltanolabs-target-postgres
+    config:
+
